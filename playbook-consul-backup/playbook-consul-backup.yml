@@ -1,0 +1,21 @@
+---
+- hosts: servers-role-consul
+  tasks: 
+  - name: Create log path
+    file: path=/var/log/consul-backinator state=directory owner=consul group=consul mode=0775 recurse=yes
+    
+  - name: Create backup path
+    file: path=/var/consul/backup state=directory owner=consul group=consul mode=0775 recurse=yes
+
+  - name: Put backup tool to server
+    copy: src=./files/consul-backinator dest=/usr/bin/ owner=root group=root mode="u=rwx,g=rx,o=rx"
+
+  - name: Put cron.daily script to server
+    copy: src=./files/consul-backinator-cron dest=/etc/cron.daily/ owner=root group=root mode="u=rwx,g=rx,o=rx"
+
+  - name: Check cron job
+    become: true
+    shell: run-parts /etc/cron.daily -v
+    register: checks
+
+  - debug: var=checks
