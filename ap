@@ -1,0 +1,5 @@
+#!/bin/bash
+
+COMMAND="ansible-playbook $1 -i hosts -u a-eaa -b -K"
+
+bash -c "${COMMAND}"

@@ -5,6 +5,6 @@ set -e
 BACKUP_STORAGE=/var/consul/backup
 BACKUP_LOG=/var/log/consul-backinator/consul-backinator.log
 
-/usr/bin/consul-backinator backup -addr=127.0.0.1:8500 -dc=npo -file ${BACKUP_STORAGE}/consul_$(date +%s).bak >> ${BACKUP_LOG} 2>&1
+/usr/bin/consul-backinator backup -addr=127.0.0.1:8500 -dc=npo -file ${BACKUP_STORAGE}/consul_$(date +"%d%m%Y").bak >> ${BACKUP_LOG} 2>&1
 
 find ${BACKUP_STORAGE} -mtime +10 -type f -delete >> ${BACKUP_LOG} 2>&1
